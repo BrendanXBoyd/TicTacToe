@@ -1,15 +1,26 @@
+"""Player 1 is 1, player 2 is 2.  Each turn, the player inputs which square they want
+The square is filled with a 1 or 2 (unless already full)
+When there is a completed win, or a full board, the game ends"""
 
+################ Imports ################
+import numpy as np
 
-#Player 1 is 1, player 2 is 2.  Each turn, the player inputs which square they want
-#The square is filled with a 1 or 2 (unless already full)
-#When there is a completed win, or a full board, the game ends
+################ CLASSES ################
+class GameBoard:
+    N = 3
+    B = np.zeros((3,3))
+    def __init__(gb, boardSize):
+        gb.N = boardSize
+        gb.B = np.zeros((boardSize,boardSize))
 
 ################ FUNCTIONS ################
-
 #Create a function to make a move
 def makeMove(gb, p, inR, inC):
     #gb is gameboard, p is the current player (should be 1 or 2)
     #inR and inC are row and column to play to, respectively
+
+    #Currently won't work if the moves are out of range or if the gameboard is
+    #not set up properly.  Also does not check for wins yet.
 
     #Check if player is valid
     if bool(p==1 or p==2) == False:
@@ -24,9 +35,10 @@ def makeMove(gb, p, inR, inC):
         return(-1)
 
 #Create a function to display the board
+def displayBoard(gb):
+    gb = 1
 
-
-################ Run test cases ################ 
+################ Run test cases ################
 #Create array to store board
 gb = [[0,0,0], [0,0,0], [0,0,0]]
 
