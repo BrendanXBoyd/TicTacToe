@@ -7,50 +7,49 @@ import numpy as np
 
 ################ CLASSES ################
 class GameBoard:
-    N = 3
-    B = np.zeros((3,3))
-    def __init__(gb, boardSize):
+    #Create initialization funtion
+    def __init__(gb, boardSize = 3):
         gb.N = boardSize
         gb.B = np.zeros((boardSize,boardSize))
 
+    #Create function to make a move
+    def move(gb, p, inR, inC):
+        #gb is gameboard, p is the current player (should be 1 or 2)
+        #inR and inC are row and column to play to, respectively
+
+        #Currently won't work if the moves are out of range or if the gameboard is
+        #not set up properly.  Also does not check for wins yet.
+
+        #Check if player is valid
+        if bool(p==1 or p==2) == False:
+            print("Error: Invalid player")
+            return(-1)
+
+        #If space is unoccupied, play there
+        if (gb.B[inR][inC]==0):
+            gb.B[inR][inC] = p
+        else:
+            print("Error: Space is occupied")
+            return(-1)
+
+    #Create a function to display the board
+    def disp(gb):
+        for r in range(0,gb.N):
+            s = repr(int(gb.B[r][0]))
+            for c in range(1,gb.N):
+                s = s + " " + repr(int(gb.B[r][c]))
+            print(s)
+
 ################ FUNCTIONS ################
-#Create a function to make a move
-def makeMove(gb, p, inR, inC):
-    #gb is gameboard, p is the current player (should be 1 or 2)
-    #inR and inC are row and column to play to, respectively
 
-    #Currently won't work if the moves are out of range or if the gameboard is
-    #not set up properly.  Also does not check for wins yet.
-
-    #Check if player is valid
-    if bool(p==1 or p==2) == False:
-        print("Error: Invalid player")
-        return(-1)
-
-    #If space is unoccupied, play there
-    if (gb[inR][inC]==0):
-        gb[inR][inC] = p
-    else:
-        print("Error: Space is occupied")
-        return(-1)
-
-#Create a function to display the board
-def displayBoard(gb):
-    for r in range(0,3):
-        s = repr(gb[r][0])
-        for c in range(1,3):
-            s = s + repr(gb[r][c])
-        print(s)
 
 ################ Run test cases ################
-#Create array to store board
-gb = [[0,0,0], [0,0,0], [0,0,0]]
-
+#Create some objects
+G = GameBoard()
+print(G.N)
+G1 = GameBoard(5)
+print(G1.N)
 #Make some moves
-displayBoard(gb)
-makeMove(gb, 3, 0, 0)
-displayBoard(gb)
-makeMove(gb, 1, 0, 0)
-displayBoard(gb)
-makeMove(gb, 1, 0, 0)
-displayBoard(gb)
+G.move(1,1,1)
+G.move(2,0,1)
+G.disp()
