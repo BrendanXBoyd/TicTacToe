@@ -36,13 +36,21 @@ def makeMove(gb, p, inR, inC):
 
 #Create a function to display the board
 def displayBoard(gb):
-    gb = 1
+    for r in range(0,3):
+        s = repr(gb[r][0])
+        for c in range(1,3):
+            s = s + repr(gb[r][c])
+        print(s)
 
 ################ Run test cases ################
 #Create array to store board
 gb = [[0,0,0], [0,0,0], [0,0,0]]
 
 #Make some moves
+displayBoard(gb)
 makeMove(gb, 3, 0, 0)
+displayBoard(gb)
 makeMove(gb, 1, 0, 0)
+displayBoard(gb)
 makeMove(gb, 1, 0, 0)
+displayBoard(gb)
