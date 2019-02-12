@@ -6,8 +6,9 @@ When there is a completed win, or a full board, the game ends"""
 import numpy as np
 
 ################ CLASSES ################
+# GameBoard: A class to hold the game board
 class GameBoard:
-    #Create initialization funtion
+    #Initialization funtion
     def __init__(gb, boardSize = 3):
         # N stores the size of the game
         # B stores the board itself
@@ -23,7 +24,7 @@ class GameBoard:
         gb.W = 0
         gb.tieCount = 0
 
-    #Create function to make a move
+    # move(): Called when the player wants to make a move
     #Returns the player (p) if they won, 0 for a tie, or -1 for an error
     def move(gb, p, inR, inC):
         #p is the current player (should be 1 or 2)
@@ -50,7 +51,7 @@ class GameBoard:
             print("Error: Space is occupied")
             return(-1)
 
-    #Create a function to display the board
+    # disp(): Displays the board
     def disp(gb):
         for r in range(0,gb.N):
             s = repr(int(gb.B[r][0]))
@@ -58,7 +59,7 @@ class GameBoard:
                 s = s + " " + repr(int(gb.B[r][c]))
             print(s)
 
-    #Function to see if the game is over
+    # checkWinOrTie(): Checks if the game is over (won or tied)
     #returns 0 for a tie, p if they won, or -1 if the game continues
     def checkWinOrTie(gb, p, inR, inC):
         ## Check in the row ##
@@ -149,6 +150,8 @@ class GameBoard:
             return(0)
         #If we've made it this far, the game continues
         return(-1)
+
+# GameLoop: A class to hold the game loop
 
 ################ FUNCTIONS ################
 
