@@ -32,12 +32,12 @@ class GameBoard:
 
         #Check if player is valid
         if bool(p==1 or p==2) == False:
-            print("Error: Invalid player")
+            print("Error:",p,"is not a valid player")
             return(-1)
 
         #Check if move is within bounds
         if (inR < 0 or inR >= gb.N or inC < 0 or inC >= gb.N):
-            print("Error: Move is out of bounds")
+            print("Error: Position (",inR,",",inC,") is out of bounds")
             return(-1)
 
         #If space is unoccupied and within bounds, play there
@@ -48,7 +48,7 @@ class GameBoard:
             winner = gb.checkWinOrTie(p, inR, inC)
             if (winner != -1): return(winner)
         else:
-            print("Error: Space is occupied")
+            print("Error: Position (",inR,",",inC,") is occupied")
             return(-1)
 
     # disp(): Displays the board
@@ -154,27 +154,97 @@ class GameBoard:
 # GameLoop: A class to hold the game loop
 
 ################ FUNCTIONS ################
+#Tie test case (N=3)
+def testTie():
+    print("Running tie test case:")
+    #Create a gameboard
+    G = GameBoard()
 
+    #Make moves
+    G.move(1,0,0)
+    G.move(2,0,1)
+    G.move(2,1,0)
+    G.move(2,1,1)
+    G.move(1,1,2)
+    G.move(1,2,0)
+    G.move(1,2,1)
+    G.move(2,2,2)
+
+    #Print the board
+    G.disp()
+#Win test cases (N=3)
+def testRow():
+    print("Running row win test case:")
+    #Create a gameboard
+    G = GameBoard()
+
+    #Make moves
+    G.move(1,0,0)
+    G.move(1,0,1)
+    G.move(1,0,2)
+
+    #Print the board
+    G.disp()
+def testCol():
+    print("Running col win test case:")
+    #Create a gameboard
+    G = GameBoard()
+
+    #Make moves
+    G.move(1,0,0)
+    G.move(1,1,0)
+    G.move(1,2,0)
+
+    #Print the board
+    G.disp()
+def testD1():
+    print("Running D1 win test case:")
+    #Create a gameboard
+    G = GameBoard()
+
+    #Make moves
+    G.move(1,0,0)
+    G.move(1,1,1)
+    G.move(1,2,2)
+
+    #Print the board
+    G.disp()
+def testD2():
+    print("Running D2 win test case:")
+    #Create a gameboard
+    G = GameBoard()
+
+    #Make moves
+    G.move(1,0,2)
+    G.move(1,1,1)
+    G.move(1,2,0)
+
+    #Print the board
+    G.disp()
+#Error test cases (N=3)
+def testErr():
+    #Create board
+    G = GameBoard()
+
+    # Try move out of bounds
+    print("Testing OOB moves:")
+    G.move(1,-1,0)
+    G.move(1,0,-1)
+    G.move(1,3,0)
+    G.move(1,0,3)
+    # G.move(1,"a",0) # This still gives an error
+
+    # Try invalid player
+    print("Testing invalid players:")
+    G.move(0,1,1)
+    G.move(3,1,1)
+    G.move("a",1,1)
+
+    # Try moving to an occupied space
+    print("Testing movement to an occupied space:")
+    G.move(1,1,1)
+    G.move(1,1,1)
+    G.move(2,1,1)
 
 ################ Run test cases ################
-#Create some objects
-G = GameBoard()
-print(G.N)
-G1 = GameBoard(5)
-print(G1.N)
-#Make some moves
-G.move(1,1,0)
-G.move(2,0,1)
-G.move(1,0,4)
-G.disp()
-G1.move(1,1,1)
-G1.move(2,0,1)
-G1.move(1,0,4)
-G1.disp()
-#Let player 2 win
-G.move(2,1,1)
-G.disp()
-G.move(2,0,2)
-G.disp()
-G.move(2,2,0)
-G.disp()
+testTie()
