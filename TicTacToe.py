@@ -152,6 +152,79 @@ class GameBoard:
         return(-1)
 
 # GameLoop: A class to hold the game loop
+class GameLoop:
+    #Initialization function
+    def __init__(gl, boardSize = 3):
+        #gb stores the gameboard
+        #cp stores the current player
+        #turn stores the current turn
+        #gameEnded is true when a tie or win is achieved
+        gl.gb = GameBoard(boardSize)
+        gl.cp = 1
+        gl.turn = 0
+        gl.gameEnded = False
+        gl.mainLoop()
+
+    #Main function
+    def mainLoop(gl):
+        #Print the current board
+        gl.turn += 1
+        print("--- Turn",gl.turn,"---")
+        gl.gb.disp()
+
+        #Ask for the player's move
+        invalidMove = True
+        while (invalidMove):
+            print("Enter the row for player",gl.cp,":")
+            inR = int(input())
+            print("Enter the column for player",gl.cp,":")
+            inC = int(input())
+
+            #Try the move
+            err = gl.gb.move(gl.cp,inR,inC)
+
+            #If successful, exit
+            if (err == gl.cp or err == 0):
+                #The current player just won or the game tied
+                gl.gameEnded = True
+                invalidMove = False
+            elif (err == None):
+                #The move was successful but did not end the game
+                invalidMove = False
+
+        #Update the current player
+        #2 if cp=1, 1 if cp=2
+        gl.cp = 3-gl.cp
+
+        #If game is ended, call exit protocol
+        if (gl.gameEnded):
+            gl.gameOver()
+            return()
+        else:
+            #If game is not over, call mainLoop() again
+            gl.mainLoop()
+
+    #gameOver() function to handle when the game ends
+    def gameOver(gl):
+        #Print the final game state
+        gl.gb.disp()
+
+        #Ask the player if they would like to play again
+        print("Enter 1 if you would like to play again:")
+        playAgain = int(input())
+
+        #If they would like to play again, ask how big the board should be and
+        #create a new game board
+        if (playAgain == 1):
+            print("Enter the size of the new game:")
+            boardSize = int(input())
+
+            #Reset all variables
+            gl.gb = GameBoard(boardSize)
+            gl.cp = 1
+            gl.turn = 0
+            gl.gameEnded = False
+            gl.mainLoop()
 
 ################ FUNCTIONS ################
 #Tie test case (N=3)
@@ -246,5 +319,13 @@ def testErr():
     G.move(1,1,1)
     G.move(2,1,1)
 
+#Start game
+def startGame():
+    #Ask how big the game should be, then start the game loop
+    print("Enter the size of the game board:")
+    boardSize = int(input())
+
+    gl = GameLoop(boardSize)
+
 ################ Run test cases ################
-testTie()
+startGame()
